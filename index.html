@@ -46,11 +46,11 @@
            
         obj3d.position.set(0, 0, -100);
 
-		if (window.DeviceOrientationEvent) {
+		/*if (window.DeviceOrientationEvent) {
 			window.addEventListener("deviceorientation", function(event) {
 				listener(event.alpha, event.beta, event.gamma);
 			}, true);
-		}
+		}*/
 		
 		var camera = new THREE.PerspectiveCamera(30, width / height, 1, 1000);
         camera.position.z = 0;
@@ -99,6 +99,9 @@
 		}
 		
 		animate();
+		const sensor = new AbsoluteOrientationSensor( { frequency: 60 } );
+        sensor.onreading = () => obj3d.quaternion.fromArray(sensor.quaternion);
+        sensor.start();
     </script>
 </body>
 </html>
